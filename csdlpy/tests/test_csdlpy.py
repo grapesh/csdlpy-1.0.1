@@ -17,7 +17,6 @@ from datetime import datetime as dt
 def run_test_csdlpy (argv):
     
     toolkitPath = ''
-    toolkitPath = 'F:/csdlpy-1.0.1'
     
     try:
         opts, args = getopt.getopt(argv,"ht:",["help","toolkitPath="])
