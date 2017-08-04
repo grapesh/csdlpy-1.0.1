@@ -1,0 +1,68 @@
+svv@20170724
+
+== Intro == 
+
+The Coast Survey Development Lab PYthon (CSDLPY) library development
+was initiated by NOAA's National Ocean Service.
+
+The primary purpose of the CSDLPY stack of functions is to enable fast 
+and efficient pre- and post-processing of NOAA's ESTOFS and HSOFS 
+production. Since many low-level functions are very generic to ADCIRC
+and to a typical ocean modeling production tasks, the idea is to 
+open it up to a wider audience for use and ability to contribute.
+
+== Design Considerations ==
+
+1. Minimize dependencies on non-standard Python modules.
+Although it is easy to install additional modules on personal systems,
+it takes significant amount of time to approve and test those on the 
+operational clusters. Therefore it is a requirement to keep external 
+dependencies to a minimum.
+
+2. Low-level functions need to be kept as generic as possible.
+To avoid code duplication, and to achieve wider application, the codes
+should be kept neat and generic as much as possible.
+
+3. Application codes are separate from the main CSDLPY stack.
+The stack is to be maintained as a separate entity from the CSDLPY-based
+applications.
+
+4. Tests provided with CSDLPY stack rely on web-available data files.
+Tests are to validate the installation and functionality of the stack.
+
+5. Data files for applications are provided with said applications.
+
+6. Base Python version is 2.7.13. 
+There is no provision for supporting Python 3 at this time.
+
+7. CSDLPY stack to be self-sufficient package, with potential to install
+through pip.
+
+8. Major library upgrades are to be synced with major updates of the 
+operational products/applications that rely on CSDLPY. 
+
+== Versioning ==
+
+1.0.1. 
+Initial implementation. Includes: 
+* basic ADCIRC/ESTOFS support 
+* interpolation methods
+* CO-OPS data interfaces 
+* basic ATCF interface 
+* basic graphics tools
+Requirements: netCDF4 1.2.9, numpy 1.13.0, matplotlib 2.0.2
+
+NOAA Wishlist:
+* full ADCIRC interface
+* additional ESTOFS/HSOFS interface
+* GFS/NAM/ECMWF interface
+* optimization of interpolation methods
+* advanced storm surge validation tools
+* NDBC data interface for wave-coupled applications
+* ensemble forecast analytics
+* more advanced graphics tools
+* scatter plots, basic statistics
+* SWAN, X-Beach, ROMS interfaces
+* more data transfer tools
+* pip install/setup 
+ 
