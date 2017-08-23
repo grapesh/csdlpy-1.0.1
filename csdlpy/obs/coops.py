@@ -5,7 +5,6 @@ Created on Wed Mar 15 12:06:00 2017
 @author: Sergey.Vinogradov
 """
 from datetime import datetime
-from datetime import timedelta
 import numpy as np
 from csdlpy import transfer
 
@@ -190,22 +189,21 @@ def getActiveStations ():
             'nws' : nws_id}
 
 #==============================================================================
-def bias_table (csvFile, avgDays, now=None):
+def bias_table (csvFile, dates):
     """
     Alternative to SHEF bulletin.
     Reads all active CO-OPS stations via openDAP, computes bias\
     and writes into a file in comma-delimited format
     """
     rightNow = datetime.utcnow()    
-    if now is None:
-        now = rightNow
-
-    dates = (now-timedelta(days=avgDays-1), now)    
-    active = getActiveStations()
 
     f = open(csvFile,'w')
-    header = 'NOS-ID, NWS-ID, lon, lat, Bias MSL (meters), Length of record (days)\n'
+    header = 'NOS-ID, NWS-ID, lon, lat, Bias MSL (meters), Length of record (days),' + \
+              datetime.strftime(dates[0],'%Y%m%d') +'--' + \
+              datetime.strftime(dates[1],'%Y%m%d') + '\n'
     f.write(header)
+
+    active = getActiveStations()
 
     for count in range(len(active['nos'])):
         
