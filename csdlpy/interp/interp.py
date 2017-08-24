@@ -116,8 +116,12 @@ def projectTimeSeries (obsDates, obsVals, modDates, modVals, refStepMinutes=6):
     refEnd   = np.minimum(np.max(obsDates), np.max(modDates))
     refStep  = timedelta(minutes=refStepMinutes)
     prec     = timedelta(minutes=0.5*refStepMinutes)
+    print 'refStart = ', refStart
+    print 'refEnd   = ', refEnd
+    print 'refStep = ', refStep
+
     
-    refDates = np.arange(refStart, refEnd, refStep).astype(datetime)
+    refDates = np.arange(refStart, refEnd, refStep).astype(datetime.datetime)
 
     # Project obs and model onto reference time line
     obsValsProj  = []    
