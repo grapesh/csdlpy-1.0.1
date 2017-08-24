@@ -248,4 +248,4 @@ def read_bias_table (csvFile, column=4):
         zo.append(float(sline[column]))
     f.close()
     return xo, yo, zo, dates
-  
+
