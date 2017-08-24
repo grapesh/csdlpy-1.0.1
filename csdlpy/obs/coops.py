@@ -240,11 +240,12 @@ def read_bias_table (csvFile, column=4):
     xo = []
     yo = []
     zo = []
+    dates = lines[0].split(',')[-1]
     for line in lines[1:]:
         sline = line.split(',')
         xo.append(float(sline[2]))
         yo.append(float(sline[3]))
         zo.append(float(sline[column]))
     f.close()
-    return xo, yo, zo
-
+    return xo, yo, zo, dates
+  
