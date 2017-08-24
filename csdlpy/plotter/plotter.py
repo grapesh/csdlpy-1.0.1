@@ -14,6 +14,10 @@ import matplotlib.tri    as tri
 from csdlpy import interp, valstat, transfer
 
 #==============================================================================
+def save (fileName): 
+    plt.savefig ( fileName)
+
+#==============================================================================
 def getCoastline (res = 'low'): 
     """
     Downloads NOAA coastline from OCS ftp    
