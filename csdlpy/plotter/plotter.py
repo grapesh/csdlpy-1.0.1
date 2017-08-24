@@ -14,9 +14,9 @@ import matplotlib.tri    as tri
 from csdlpy import interp, valstat, transfer
 
 #==============================================================================
-def save (fileName): 
+def save (titleStr, fileName): 
+    plt.title(titleStr)
     plt.savefig ( fileName)
-
 #==============================================================================
 def getCoastline (res = 'low'): 
     """
