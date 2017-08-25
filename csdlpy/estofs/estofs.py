@@ -27,7 +27,7 @@ def latestForecast (now = datetime.utcnow()):
     t00z = datetime.strptime(yyyy+mm+dd+' 05:20','%Y%m%d %H:%M')
     t06z = datetime.strptime(yyyy+mm+dd+' 11:20','%Y%m%d %H:%M')
     t12z = datetime.strptime(yyyy+mm+dd+' 17:20','%Y%m%d %H:%M')
-    t18z = datetime.strptime(yyyy+mm+dd+' 23:20','%Y%m%d %H:%M')
+    t18z = datetime.strptime(yyyy+mm+dd+' 22:20','%Y%m%d %H:%M')
 
     fxDate = now
     if now < t00z:
