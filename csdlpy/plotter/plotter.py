@@ -47,6 +47,44 @@ def getCoastline (res = 'low'):
             'lat' : yc}
 
 #==============================================================================
+def getCities (): 
+    """
+    
+    """
+    citiesFile = "./cities.csv"
+    request = 'ftp://ocsftp.ncd.noaa.gov/estofs/data/cities.csv'
+    transfer.download (request, citiesFile)
+    
+    import csv
+    f = open(citiesFile)
+    s = csv.reader(f)    
+    next(s, None) 
+    xc   = []
+    yc   = []
+    name = []
+    for row in s:        
+        xc.append(float(row[3]))
+        yc.append(float(row[2]))
+        name.append(row[0])
+    f.close()        
+
+    return {'lon' : xc, 
+            'lat' : yc,
+            'name' : name}
+#==============================================================================
+def plotCities (cities, xlim, ylim, col='0.5',fs=6): 
+    
+    #TODO: declutter    
+    for n in range(len(cities['lon'])):
+        xo = cities['lon'][n]
+        yo = cities['lat'][n]
+        nm = cities['name'][n]
+        
+        if xlim[0] <= xo and xo <= xlim[1] and ylim[0] <= yo and yo <= ylim[1]:
+            plt.plot(xo, yo, 'o', ms=2, color=col, mfc='w', zorder=100,lw=1)
+            plt.text(xo, yo, nm, color=col, zorder=100, fontsize=fs)
+
+#==============================================================================
 def plotCoastline (coast, col='0.5'): 
     plt.plot(coast['lon'], coast['lat'],',',color=col,zorder=1)
 
