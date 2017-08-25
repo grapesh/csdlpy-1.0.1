@@ -74,7 +74,7 @@ def getPointsWaterlevel ( ncFile ):
     elif ncTitle.find('V1.') > 0:
         estofsVersion = 1
         xy_mltplr = 0.01745323168310549  #Magic ESTOFS1 Multiplier...
-    elif ncTitle.find('V2.') > 0:
+    elif ncTitle.find('V2.') > 0 or ncTitle.find('HSOFS') > 0:
         estofsVersion = 2
         xy_mltplr = 1.00
     print '[info]: ESTOFS Version ' + str(estofsVersion)  +' detected.'
