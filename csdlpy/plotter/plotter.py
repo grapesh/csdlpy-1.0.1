@@ -15,8 +15,9 @@ from csdlpy import interp, valstat, transfer
 
 #==============================================================================
 def save (titleStr, fileName): 
-    plt.title(titleStr)
+    plt.title(titleStr,fontsize=7)
     plt.savefig ( fileName)
+
 #==============================================================================
 def getCoastline (res = 'low'): 
     """
