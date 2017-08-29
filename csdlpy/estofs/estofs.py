@@ -66,16 +66,17 @@ def getPointsWaterlevel ( ncFile ):
 
     z = adcirc.readTimeSeries (ncFile, 'zeta')
 
-    # checking ESTOFS version
-    ncTitle = z['title']
-    if ncTitle.find('PACIFIC') > 0:
-        estofsVersion = 1
-        xy_mltplr = 1.00 #0.01745323168310549  #Magic ESTOFS1 Multiplier...
-    else:
-        estofsVersion = 2
-        xy_mltplr = 1.00
-    print '[info]: ESTOFS Version ' + str(estofsVersion)  +' detected.'
+    ## checking ESTOFS version
+    #ncTitle = z['title']
+    #if ncTitle.find('PACIFIC') > 0:
+    #    estofsVersion = 1
+    #    xy_mltplr = 1.00 #0.01745323168310549  #Magic ESTOFS1 Multiplier...
+    #else:
+    #    estofsVersion = 2
+    #    xy_mltplr = 1.00
+    #print '[info]: ESTOFS Version ' + str(estofsVersion)  +' detected.'
     
+    xy_mltplr = 1.00 #0.01745323168310549 was magic ESTOFS1 Multiplier...
     z['lon']  = xy_mltplr*z['lon']
     z['lat']  = xy_mltplr*z['lat']
 
