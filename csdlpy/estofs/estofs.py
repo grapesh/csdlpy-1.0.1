@@ -70,7 +70,7 @@ def getPointsWaterlevel ( ncFile ):
     ncTitle = z['title']
     if ncTitle.find('PACIFIC') > 0:
         estofsVersion = 1
-        xy_mltplr = 0.01745323168310549  #Magic ESTOFS1 Multiplier...
+        xy_mltplr = 1.00 #0.01745323168310549  #Magic ESTOFS1 Multiplier...
     else:
         estofsVersion = 2
         xy_mltplr = 1.00
