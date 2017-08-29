@@ -15,7 +15,6 @@ def readTrack ( atcfFile ):
     Returns:
         dict: 'lat', 'lon', 'vmax', 'mslp','dates'
     """
-    lines = open(atcfFile).readlines()
         
     myOcn  = []
     myCy   = []
@@ -24,21 +23,29 @@ def readTrack ( atcfFile ):
     myLon  = []
     myVmax = []
     myMSLP = []
-    for line in lines:
-        r = line.rstrip().split(',')
-        myOcn.append  (r[0])
-        myCy.append   (int(r[1]))
-        myDate.append (datetime.strptime(r[2].strip(),'%Y%m%d%H'))
-        latSign = -1.0
-        if 'N' in r[6]:
-            latSign = 1.0     
-        myLat.append  (latSign*0.1*float(r[6][:-1]))
-        lonSign = -1.0
-        if 'E' in r[7]:
-            lonSign = 1.0
-        myLon.append  (lonSign*0.1*float(r[7][:-1]))
-        myVmax.append (float(r[8]))
-        myMSLP.append (float(r[9]))
+    
+    fileOk = True
+    try:
+        lines = open(atcfFile).readlines()
+    except:
+        fileOK = False
+    
+    if fileOK:
+        for line in lines:
+            r = line.rstrip().split(',')
+            myOcn.append  (r[0])
+            myCy.append   (int(r[1]))
+            myDate.append (datetime.strptime(r[2].strip(),'%Y%m%d%H'))
+            latSign = -1.0
+            if 'N' in r[6]:
+                latSign = 1.0     
+            myLat.append  (latSign*0.1*float(r[6][:-1]))
+            lonSign = -1.0
+            if 'E' in r[7]:
+                lonSign = 1.0
+            myLon.append  (lonSign*0.1*float(r[7][:-1]))
+            myVmax.append (float(r[8]))
+            myMSLP.append (float(r[9]))
     
     return { 
             'basin' : myOcn,    'cy' : myCy, 'dates' : myDate, 
