@@ -16,10 +16,14 @@ def download (remote, local):
     """
     if not os.path.exists(local):
         print '[info]: downloading ', remote, ' as ', local
-        f = urllib2.urlopen(remote)
-        data = f.read()
-        with open(local, "w") as code:
-            code.write(data)
+        try:
+            f = urllib2.urlopen(remote)
+            data = f.read()
+            with open(local, "w") as code:
+                code.write(data)
+        except:
+            print '[warn]: file ', remote, ' was not downloaded'
+            
     else:
         print '[warn]: file ', local, ' exists, skipping.'
 
