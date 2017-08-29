@@ -24,11 +24,12 @@ def readTrack ( atcfFile ):
     myVmax = []
     myMSLP = []
     
-    fileOk = True
+    fileOK = True
     try:
         lines = open(atcfFile).readlines()
     except:
         fileOK = False
+        print '[warn]: track file ', atcfFile, ' does not exist.'
     
     if fileOK:
         for line in lines:
