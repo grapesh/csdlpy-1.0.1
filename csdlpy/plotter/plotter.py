@@ -297,7 +297,7 @@ def plot_estofs_timeseries (obs_dates,      obs_values,
             peak_val = np.nanmax(mod_values)
             peak_dat = mod_dates[np.argmax(mod_values)]
             plt.plot(peak_dat, peak_val, 'bo')
-            plt.text(peak_dat, 1.05*peak_val, str(np.round(peak_val,3)),color='b')
+            plt.text(peak_dat, 1.05*peak_val, str(np.round(peak_val,2)),color='b')
             plt.plot([obs_dates[0], mod_dates[-1]], [peak_val, peak_val], '--b')
             plt.plot([peak_dat, peak_dat], [ylim[0], ylim[1]], '--b')
         except:
