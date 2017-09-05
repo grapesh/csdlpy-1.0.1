@@ -241,7 +241,7 @@ def addSurface (grid, surface,
 #====================================================================
 def plot_estofs_timeseries (obs_dates,      obs_values, 
                             mod_dates,      mod_values, 
-                            figFile=None,   stationName=None, 
+                            figFile=None,   stationName='', 
                             htp_dates=None, htp_vals=None, 
                             daterange=None, ylim=[-2.0, 2.0]):
     """
