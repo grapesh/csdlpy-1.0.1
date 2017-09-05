@@ -309,15 +309,15 @@ def plot_estofs_timeseries (obs_dates,      obs_values,
         plt.ylim( ylim )
         if daterange is not None:
             plt.xlim ([daterange[0], mod_dates[-1]])
-        if rmsd > 0:
-            plt.title(stationName+', RMSD=' +str(rmsd)+' meters')
-        else:
-            plt.title(stationName)
+        #if rmsd > 0:
+        #plt.title(stationName+', RMSD=' +str(rmsd)+' meters')
+        #else:
+        plt.title(stationName)
         plt.legend(bbox_to_anchor=(0.9, 0.35))
         plt.grid()
         plt.xlabel('DATE UTC')
         plt.ylabel('WL, meters LMSL')
         plt.savefig( figFile )
-        plt.close()
+        #plt.close()
     return {'rmsd' : rmsd,
             'N'    : N}    
