@@ -291,7 +291,7 @@ def plot_estofs_timeseries (obs_dates,      obs_values,
         if htp_dates is not None:
             plt.plot(htp_dates, htp_vals, color='c',label='ASTRON. TIDE')
         plt.plot(obs_dates, obs_values, '.', color='g',label='OBSERVED')
-        plt.plot(mod_dates, mod_values, '.', color='b',label='FORECAST')
+        plt.plot(mod_dates, mod_values, '.', color='b',label='STORM TIDE FCST')
         
         try:
             peak_val = np.nanmax(mod_values)
