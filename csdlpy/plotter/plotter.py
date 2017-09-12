@@ -87,6 +87,7 @@ def plotCities (cities, xlim, ylim, col='0.5',fs=6):
 #==============================================================================
 def plotCoastline (coast, col='0.5'): 
     plt.plot(coast['lon'], coast['lat'],',',color=col,zorder=1)
+    plt.plot( [x-360. for x in coast['lon']], coast['lat'],',',color=col,zorder=1)
 
 #==============================================================================
 def plotMap (x, y, fig_w=8.0, lonlim=None, latlim=None): 
