@@ -256,6 +256,16 @@ def readSurfaceField_ascii ( asciiFile ):
     return value 
 
 #==============================================================================
+def computeMaxele (ncFile):
+    nc = netCDF4.Dataset(ncFile)
+    zeta  = nc.variables['zeta'][:]         
+    fill_value = nc._FillValue    
+    zeta = np.ma.masked_equal(zeta,fill_value)
+    return {'lon'   : nc.variables['x'][:],
+            'lat'   : nc.variables['y'][:],
+            'maxele' : np.amax(zeta, axis=0)}
+
+#==============================================================================
 def readFort14 ( fort14file ):
     """
     Reads ADCIRC fort.14 file
