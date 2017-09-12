@@ -263,7 +263,7 @@ def computeMaxele (ncFile):
     zeta = np.ma.masked_equal(zeta,fill_value)
     return {'lon'   : nc.variables['x'][:],
             'lat'   : nc.variables['y'][:],
-            'maxele' : np.amax(zeta, axis=0)}
+            'value' : np.amax(zeta, axis=0)}
 
 #==============================================================================
 def readFort14 ( fort14file ):
