@@ -192,7 +192,7 @@ def addTriangles (data, threshold=0.0, clim=[-0.5, 0.5], cmap=None):
     
 #==============================================================================
 def addSurface (grid, surface, 
-                 clim=[0.0, 3.0]):
+                 clim=[0.0, 3.0], zorder=1):
     """
     Plots a field specified on an unstructured grid
     Args:
@@ -234,7 +234,7 @@ def addSurface (grid, surface,
     myCmap = plt.cm.jet
     plt.tripcolor(Tri, z, shading='gouraud',\
                          edgecolors='none', \
-                         cmap=myCmap, vmin=clim[0], vmax=clim[1])
+                         cmap=myCmap, vmin=clim[0], vmax=clim[1],zorder=zorder)
     
     cbar = plt.colorbar()
     cbar.ax.tick_params(labelsize=8) 
