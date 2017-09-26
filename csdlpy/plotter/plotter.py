@@ -305,6 +305,12 @@ def plot_estofs_timeseries (obs_dates,      obs_values,
             
             peak_str = str(peak_dat.hour).zfill(2) + ':' + str(peak_dat.minute).zfill(2)
             plt.text(peak_dat, ylim[0], peak_str ,color='b')            
+            
+            #Attempt to post-correct
+            lastdata = np.where (mod_dates==obs_dates[-1])
+            offset   = obs_values[-1] - mod_values[lastdata]
+            plt.plot(mod_dates[lastdata:], offset + mod_values[lastdata:], color='g',label='BIAS-CORRECTED')
+            
         except:
             pass
         
