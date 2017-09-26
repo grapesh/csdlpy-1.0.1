@@ -307,7 +307,7 @@ def plot_estofs_timeseries (obs_dates,      obs_values,
             plt.text(peak_dat, ylim[0], peak_str ,color='b')            
             
             #Attempt to post-correct
-            lastdata = np.where (mod_dates==valstat.nearest(mod_dates, obs_dates[-1]))
+            lastdata = np.where (mod_dates==valstat.nearest(mod_dates, obs_dates[-1])[0])
             offset   = obs_values[-1] - mod_values[lastdata]
             plt.plot(mod_dates[lastdata:], offset + mod_values[lastdata:], color='g',label='BIAS-CORRECTED')
             
