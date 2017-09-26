@@ -310,7 +310,7 @@ def plot_estofs_timeseries (obs_dates,      obs_values,
             lastdata = np.where (mod_dates==valstat.nearest(mod_dates, obs_dates[-1])[0])[0][0]
             offset   = obs_values[-1] - mod_values[lastdata]            
             offset_ft = 3.28*offset
-            plt.plot(mod_dates[lastdata:], offset+mod_values[lastdata:], color='gray',label='BIAS-CORRECTED')
+            plt.plot(mod_dates[lastdata:], offset+mod_values[lastdata:], color='gray',label='POST-CORRECTED')
             plt.plot(peak_dat, offset+peak_val, 'o',color='gray')
             plt.text(peak_dat, 1.05*(offset+peak_val), \
                      str(np.round(offset+peak_val,1)) + "m (" + str(np.round(peak_ft+offset_ft,1)) +"ft) MSL", color='gray')
