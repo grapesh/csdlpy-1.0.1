@@ -309,6 +309,7 @@ def plot_estofs_timeseries (obs_dates,      obs_values,
             #Attempt to post-correct
             lastdata = np.where (mod_dates==valstat.nearest(mod_dates, obs_dates[-1])[0])
             offset   = obs_values[-1] - mod_values[lastdata]
+            print '[debug]: offset = ' + str(offset)
             plt.plot(mod_dates[lastdata:], offset + mod_values[lastdata:], color='g',label='BIAS-CORRECTED')
             
         except:
