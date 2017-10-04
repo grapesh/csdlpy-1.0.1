@@ -77,3 +77,14 @@ def getFieldsWaterlevel ( ncFile, ncVarName ):
 
     return adcirc.readSurfaceField ( ncFile, ncVarName )
 
+#==============================================================================
+#def metrics ( stationIDs, datespan, ncFiles ):    
+#    mx = ''
+#    for station in stationIDs:
+#        data = obs.coops.getData(station, datespan) 
+#        for ncFile in ncFiles:
+#            model = getPointsWaterlevel (ncFile)
+#            # Project
+#            metrics = valstat.metrics (data, model, dates)
+#            mx.append(metrics)
+
