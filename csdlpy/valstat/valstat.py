@@ -29,3 +29,24 @@ def rms(V):
     summ = np.sum(V**2)
     N    = 1.0*len(V)
     return np.sqrt( summ/N )
+
+#==============================================================================
+def metrics (data, model, dates):
+    """    
+    data and model (np.arrays) projected on the 
+    same time scale 'dates' (datetime)
+    Computes: 
+        rmsd, peak, plag (in minutes)    
+    """
+    rmsd = rms(data-model)
+    peak = np.nanmax(data) - np.nanmax(model)
+    plag = 60.*(dates[np.argmax(data)] - dates[np.argmax(model)]).total_seconds 
+    
+    return {'rmsd': rmsd, 
+            'peak': peak,
+            'plag': plag}
+#            'vexp': vexp,
+#            'bias': bias,
+#            'rval': rval,
+#            'skil': skil,
+#            'npts': npts}
