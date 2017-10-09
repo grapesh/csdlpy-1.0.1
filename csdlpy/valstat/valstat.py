@@ -35,11 +35,11 @@ def var_explained(m, d):
     """
     Returns amount of variance in d that is explained by variance in m
     """    
-    stdd = np.nanstd(d)
-    eps  = 100.*(stdd - np.nanstd(d-m))/stdd
-    if eps < 0:
+    stdd =    np.nanstd(d)
+    eps  =    100.*(stdd - np.nanstd(d-m))/stdd
+    if eps <  0:
         eps = 0.
-    if eps > 100.:
+    if eps >  100.:
         eps = 100
     return eps
 
@@ -75,19 +75,31 @@ def metrics (data, model, dates):
         skil - skill, unitless
         rval - R-value, unitless
     """
-    rmsd = rms(model-data)
-    peak = np.nanmax(model) - np.nanmax(data)
-    plag = (dates[np.argmax(model)] - dates[np.argmax(data)]).total_seconds() 
-    plag = plag/60. #in minutes
-    bias = np.nanmean(model) - np.nanmean(data)
-    vexp = var_explained (model, data)
-    skil = skill (model, data)
-    rval = rvalue(model, data)
-    #npts 
+    rmsd = np.nan
+    peak = np.nan
+    plag = np.nan
+    bias = np.nan
+    vexp = np.nan
+    skil = np.nan
+    rval = np.nan
+    
+    npts = np.count_nonzero(~np.isnan(model-data)) 
+    if npts:
+        rmsd = rms(model-data)
+        peak = np.nanmax(model) - np.nanmax(data)
+        plag = (dates[np.argmax(model)] - dates[np.argmax(data)]).total_seconds() 
+        plag = plag/60. #in minutes
+        bias = np.nanmean(model) - np.nanmean(data)
+        vexp = var_explained (model, data)
+        skil = skill (model, data)
+        rval = rvalue(model, data)
+    
     return {'rmsd': rmsd, 
             'peak': peak,
             'plag': plag,
             'bias': bias,
             'vexp': vexp,
             'skil': skil,
-            'rval': rval}
+            'rval': rval,
+            'npts': npts}
+
