@@ -6,8 +6,12 @@ Created on Thu Mar 16 12:59:49 2017
 """
 import os
 from csdlpy import adcirc
+from csdlpy import valstat
+from csdlpy.obs import coops
+from csdlpy import interp
 from datetime import datetime 
 from datetime import timedelta
+import numpy as np
 
 #==============================================================================
 def latestForecast (now = datetime.utcnow()):
@@ -77,14 +81,63 @@ def getFieldsWaterlevel ( ncFile, ncVarName ):
 
     return adcirc.readSurfaceField ( ncFile, ncVarName )
 
+
 #==============================================================================
-#def metrics ( stationIDs, datespan, ncFiles ):    
-#    mx = ''
-#    for station in stationIDs:
-#        data = obs.coops.getData(station, datespan) 
-#        for ncFile in ncFiles:
-#            model = getPointsWaterlevel (ncFile)
-#            # Project
-#            metrics = valstat.metrics (data, model, dates)
-#            mx.append(metrics)
+def metrics ( stationIDs, datespan, ncFiles, doPlot=False ):    
+    """
+    Computes a full set of time series comparison metrics
+    over a specified dateSpan
+    for a given set of CO-OPS stations provided by 7-digit IDs (str)
+    and the list of ncFiles.
+    
+    Returns mx and fx - lists of metrics and corresponding lead times (hrs)
+    """
+    
+    mx = [] # metrics
+    fx = [] # lead time, in hrs
+
+    if doPlot:
+        import matplotlib
+        matplotlib.use('Agg',warn=False)
+        import matplotlib.pyplot as plt
+           
+    for station in stationIDs:
+
+        data = coops.getData(station, datespan) 
+
+        if doPlot:            
+            plt.figure(figsize=(20,4.5))
+            
+        for ncFile in ncFiles:
+            
+            model = getPointsWaterlevel (ncFile)
+            fcst_time = model['time'][59]
+            lead_time = 1./3600*(fcst_time-datespan[0]).total_seconds()
+            fx.append(lead_time)
+            counter = 0
+            nst = np.nan
+            for s in model['stations']:
+                if station in s:
+                    nst = counter
+                    break
+                counter += 1    
+                    
+            # Project
+            pdates, pdata, pmodel = \
+            interp.projectTimeSeries (data['dates'], data['values'], 
+                                      model['time'], model['zeta'][:,nst], 
+                                      refStepMinutes=6)
+            
+            #Run metrics
+            metrics = valstat.metrics (pdata, pmodel, pdates)
+            mx.append(metrics)
+
+            #Plot data and model forecasts (optional)
+            if doPlot:
+                plt.plot(pdates, pdata, c='green')
+                plt.plot(pdates, pmodel, c=np.random.rand(3,))
+                plt.title('station ' + station)
+                plt.savefig('ts-metrics-' + station + '.png')
+
+    return mx, fx
 
