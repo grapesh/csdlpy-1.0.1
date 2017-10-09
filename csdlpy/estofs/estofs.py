@@ -139,5 +139,5 @@ def metrics ( stationIDs, datespan, ncFiles, doPlot=False ):
                 plt.title('station ' + station)
                 plt.savefig('ts-metrics-' + station + '.png')
 
-    return mx, fx
+    return mx, np.array(fx)
 
