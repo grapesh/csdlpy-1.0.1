@@ -111,6 +111,34 @@ def projectTimeSeries (obsDates, obsVals, modDates, modVals, refStepMinutes=6):
         obsValsProj (np.array)           : projected values of timeseries 1
         modValsProj (np.array)           : projected values of timeseries 2
     """
+    #Sort by date
+    obsDates  = np.array(obsDates)
+    obsVals   = np.array(obsVals)
+    ind       = np.argsort(obsDates)
+    obsDates  = obsDates[ind]
+    obsVals   = obsVals[ind]
+    # Remove nans
+    ind       = np.logical_not(np.isnan(obsVals))
+    obsDates  = obsDates[ind]
+    obsVals   = obsVals[ind]
+    
+    #Sort by date
+    modDates  =  np.array(modDates)
+    modVals   =  np.array(modVals)
+    ind       = np.argsort(modDates)
+    modDates  = modDates[ind]
+    modVals   = modVals[ind]
+    
+    #Rid of mask
+    if hasattr(modVals,'mask'):
+        ind = ~modVals.mask
+        modDates = modDates[ind]
+        modVals  = modVals[ind]
+    # Remove nans
+    ind = np.logical_not(np.isnan(modVals))
+    modDates = modDates[ind]
+    modVals  = modVals[ind]
+    
     # Create reference time line
     refStart = np.maximum(np.min(obsDates), np.min(modDates))
     refEnd   = np.minimum(np.max(obsDates), np.max(modDates))
@@ -140,81 +168,5 @@ def projectTimeSeries (obsDates, obsVals, modDates, modVals, refStepMinutes=6):
             modValsProj.append (np.nan)
     return refDates, np.array(obsValsProj), np.array(modValsProj)
 
-#
-##============================================================================== 
-#def projectTimeSeries (obsDates, obsVals, modDates, modVals, refStepMinutes=6):
-#    """
-#    Projects two timeseries (obsDates, obsVals) and (modDates, modVals)
-#    onto a common reference time scale with a resolution defined by
-#    refStepMinutes. 
-#    Note: tolerance for dates projection is half of refStepMinutes.
-#    Args:
-#        obsDates (datetime np.array of length Lobs ) : dates  for timeseries 1
-#        obsVals  (np.array of length Lobs)           : values for timeseries 1
-#        modDates (datetime np.array of length Lmod ) : dates  for timeseries 2
-#        modVals  (np.array of length Lmod)           : values for timeseries 2
-#        refStepMinutes (int, default=6)              : projection time step.
-#    Returns:
-#        refDates    (datetime np.array)  : projection dates
-#        obsValsProj (np.array)           : projected values of timeseries 1
-#        modValsProj (np.array)           : projected values of timeseries 2
-#    """
-#    #Sort by date
-#    obsDates  = np.array(obsDates)
-#    obsVals   = np.array(obsVals)
-#    ind       = np.argsort(obsDates)
-#    obsDates  = obsDates[ind]
-#    obsVals   = obsVals[ind]
-#    # Remove nans
-#    ind       = np.logical_not(np.isnan(obsVals))
-#    obsDates  = obsDates[ind]
-#    obsVals   = obsVals[ind]
-#    
-#    #Sort by date
-#    modDates  =  np.array(modDates)
-#    modVals   =  np.array(modVals)
-#    ind       = np.argsort(modDates)
-#    modDates  = modDates[ind]
-#    modVals   = modVals[ind]
-#    
-#    #Rid of mask
-#    if hasattr(modVals,'mask'):
-#        ind = ~modVals.mask
-#        modDates = modDates[ind]
-#        modVals  = modVals[ind]
-#    # Remove nans
-#    ind = np.logical_not(np.isnan(modVals))
-#    modDates = modDates[ind]
-#    modVals  = modVals[ind]
-#    
-#    # Create reference time line
-#    refStart = np.maximum(np.min(obsDates), np.min(modDates))
-#    refEnd   = np.minimum(np.max(obsDates), np.max(modDates))
-#    refStep  = timedelta(minutes=refStepMinutes)
-#    prec     = timedelta(minutes=0.5*refStepMinutes)
-#   
-#    refDates = np.arange(refStart, refEnd, refStep).astype(datetime.datetime)
-#
-#    # Project obs and model onto reference time line
-#    obsValsProj  = []    
-#    modValsProj  = []
-#
-#    for t in refDates:
-#        #find t in obsDates within refStep
-#        nearestObsDate, idx = valstat.nearest(obsDates, t)
-#        if abs(nearestObsDate - t) < prec:
-#            nearestObsVal   = obsVals[idx]
-#            obsValsProj.append (nearestObsVal)
-#        else:
-#            obsValsProj.append (np.nan)
-#            
-#        nearestModDate, idx = valstat.nearest(modDates, t)
-#        if abs(nearestModDate - t) < prec:
-#            nearestModVal   = modVals[idx]
-#            modValsProj.append (nearestModVal)
-#        else:
-#            modValsProj.append (np.nan)
-#    return refDates, np.array(obsValsProj), np.array(modValsProj)
-#
-#
+
 
