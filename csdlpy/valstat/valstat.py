@@ -102,4 +102,3 @@ def metrics (data, model, dates):
             'skil': skil,
             'rval': rval,
             'npts': npts}
-
