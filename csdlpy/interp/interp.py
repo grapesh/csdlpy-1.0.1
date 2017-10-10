@@ -94,7 +94,7 @@ def taper_exp (z_full, z_zero, zg, vg):
     return vg
 
 #============================================================================== 
-def projectTimeSeries (obsDates, obsVals, modDates, modVals, refStepMinutes=6):
+def projectTimeSeries (obsDates, obsVals, modDates, modValsMasked, refStepMinutes=6):
     """
     Projects two timeseries (obsDates, obsVals) and (modDates, modVals)
     onto a common reference time scale with a resolution defined by
@@ -121,24 +121,23 @@ def projectTimeSeries (obsDates, obsVals, modDates, modVals, refStepMinutes=6):
     ind       = np.logical_not(np.isnan(obsVals))
     obsDates  = obsDates[ind]
     obsVals   = obsVals[ind]
-    
+        
     #Sort by date
+    modVals   = np.ma.filled(modValsMasked, np.nan)
     modDates  =  np.array(modDates)
     modVals   =  np.array(modVals)
     ind       = np.argsort(modDates)
     modDates  = modDates[ind]
     modVals   = modVals[ind]
-    
+    # Remove nans
     #Rid of mask
     if hasattr(modVals,'mask'):
-        ind = ~modVals.mask
-        modDates = modDates[ind]
-        modVals  = modVals[ind]
-    # Remove nans
-    ind = np.logical_not(np.isnan(modVals))
-    modDates = modDates[ind]
-    modVals  = modVals[ind]
+        np.ma.set_fill_value(modVals, np.nan)   
     
+    ind       = np.logical_not(np.isnan(modVals))
+    modDates  = modDates[ind]
+    modVals   = modVals[ind]
+
     # Create reference time line
     refStart = np.maximum(np.min(obsDates), np.min(modDates))
     refEnd   = np.minimum(np.max(obsDates), np.max(modDates))
