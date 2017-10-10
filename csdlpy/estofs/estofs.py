@@ -83,12 +83,12 @@ def getFieldsWaterlevel ( ncFile, ncVarName ):
 
 
 #==============================================================================
-def metrics ( stationIDs, datespan, ncFiles, doPlot=False ):    
+def metrics ( station, datespan, forecasts, doPlot=False ):    
     """
     Computes a full set of time series comparison metrics
     over a specified dateSpan
-    for a given set of CO-OPS stations provided by 7-digit IDs (str)
-    and the list of ncFiles.
+    for a given CO-OPS station 7-digit IDs (str)
+    and the list of model forecasts.
     
     Returns mx and fx - lists of metrics and corresponding lead times (hrs)
     """
@@ -101,17 +101,17 @@ def metrics ( stationIDs, datespan, ncFiles, doPlot=False ):
         matplotlib.use('Agg',warn=False)
         import matplotlib.pyplot as plt
            
-    for station in stationIDs:
-
-        data = coops.getData(station, datespan) 
+    data = coops.getData(station, datespan) 
+    
+    if len(data['values']):
 
         if doPlot:            
             plt.figure(figsize=(20,4.5))
             
-        for ncFile in ncFiles:
+        for model in forecasts:
             
-            model = getPointsWaterlevel (ncFile)
-            fcst_time = model['time'][59]
+        #model = getPointsWaterlevel (ncFile)
+            fcst_time = model['time'][60]
             lead_time = 1./3600*(fcst_time-datespan[0]).total_seconds()
             fx.append(lead_time)
             counter = 0
@@ -126,7 +126,7 @@ def metrics ( stationIDs, datespan, ncFiles, doPlot=False ):
             pdates, pdata, pmodel = \
             interp.projectTimeSeries (data['dates'], data['values'], 
                                       model['time'], model['zeta'][:,nst], 
-                                      refStepMinutes=6)
+                                           refStepMinutes=6)
             
             #Run metrics
             metrics = valstat.metrics (pdata, pmodel, pdates)
